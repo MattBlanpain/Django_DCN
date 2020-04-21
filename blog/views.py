@@ -11,23 +11,30 @@ from django.views.generic import (
 from .models import Post
 
 
+def home(request):
+    context = {
+        'posts': Post.objects.all()
+    }
+    return render(request, 'blog/home.html', context)
+
+
 class PostListView(ListView):
     model = Post
-    template_name = 'blog/home.html'
-    context_object_name = 'posts'  # changes the name of the model Post
-    ordering = ['-date_posted']  # Reverses the order of the Post model
-    paginate_by = 15
+    template_name = 'blog/home.html'  # <app>/<model>_<viewtype>.html
+    context_object_name = 'posts'
+    ordering = ['-date_posted']
+    paginate_by = 5
 
 
 class UserPostListView(ListView):
     model = Post
-    template_name = 'blog/user_posts.html'
-    context_object_name = 'posts'  # changes the name of the model Post
-    paginate_by = 15
+    template_name = 'blog/user_posts.html'  # <app>/<model>_<viewtype>.html
+    context_object_name = 'posts'
+    paginate_by = 5
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
-        return Post.objects.filter(author=user).order_by('-date_posted')  # Reverses the order of the Post model
+        return Post.objects.filter(author=user).order_by('-date_posted')
 
 
 class PostDetailView(DetailView):
@@ -36,7 +43,7 @@ class PostDetailView(DetailView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'content', 'DCN_ECO_number']
+    fields = ['title', 'content']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
