@@ -6,6 +6,7 @@ Django DCN is a website used to create, view, and change DCN's for use in produc
 2. Install Django `pip install django`
 3. Install Pillow `pip install Pillow`
 4. Install django-crispy-forms `pip install django-crispy-forms`
+5. Install Pillow `pip install pylint-django`
 
 # Usage
 To start website/server run `python manage.py runserver`
