@@ -37,6 +37,16 @@ class UserPostListView(ListView):
         return Post.objects.filter(author=user).order_by('-date_posted')
 
 
+class StatePostListView(ListView):
+    model = Post
+    template_name = 'blog/state_posts.html'  # <app>/<model>_<viewtype>.html
+    context_object_name = 'posts'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Post.objects.filter(state=self.kwargs.get('state')).order_by('-date_posted')
+
+
 class PostDetailView(DetailView):
     model = Post
 
@@ -54,7 +64,9 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title', 'content']
+    fields = ['dcn_number',
+              'description_of_change',
+              'state']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
