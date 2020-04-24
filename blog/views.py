@@ -47,6 +47,16 @@ class StatePostListView(ListView):
         return Post.objects.filter(state=self.kwargs.get('state')).order_by('-date_posted')
 
 
+class PriorityPostListView(ListView):
+    model = Post
+    template_name = 'blog/priority_posts.html'  # <app>/<model>_<viewtype>.html
+    context_object_name = 'posts'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Post.objects.filter(priority=self.kwargs.get('priority'), state='under_review').order_by('-date_posted')
+
+
 class PostDetailView(DetailView):
     model = Post
 
@@ -55,7 +65,11 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['dcn_number',
               'description_of_change',
-              'state']
+              'state',
+              'closes_dcr',
+              'priority',
+              'reason_of_change',
+              'description_of_change']
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -66,7 +80,11 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
     fields = ['dcn_number',
               'description_of_change',
-              'state']
+              'state',
+              'closes_dcr',
+              'priority',
+              'reason_of_change',
+              'description_of_change']
 
     def form_valid(self, form):
         form.instance.author = self.request.user

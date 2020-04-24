@@ -20,7 +20,11 @@
         <div class="form-group">
             <button class="btn btn-outline-info" type="submit">Post</button>
         </div>
-
+        <div class="form-row">
+            <div class="form-group col-md-6 mb-0">
+                {{ form.priority|as_crispy_field }}
+            </div>
+        </div>
     </form>
 </div>
 {% endblock content %}
