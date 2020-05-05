@@ -19,13 +19,13 @@ class Post(models.Model):
 
     # -------------------    DCN  --------------------------
 
-    dcn_number = models.CharField(max_length=100)
+    dcn_number = models.CharField(max_length=100, verbose_name='DCN number')
     state = models.CharField(max_length=100, default="")
     category_of_change = models.CharField(max_length=100, default="")
 
-    description_of_change = models.TextField(default="description_of_change")
+    description_of_change = models.TextField(default="enter description of change")
 
-    reason_of_change = models.TextField(default="reason_of_change")
+    reason_of_change = models.TextField(default="enter reason of change")
 
     closes_dcr = models.BooleanField(default=False)
     priority = models.CharField(max_length=7, choices=PRIORITY_CHOICES, default='1_week')
