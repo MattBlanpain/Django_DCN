@@ -69,7 +69,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
               'closes_dcr',
               'priority',
               'reason_of_change',
-              'description_of_change']
+              ]
 
     def form_valid(self, form):
         form.instance.author = self.request.user

@@ -1,17 +1,22 @@
 {% extends "blog/base.html" %}
-{% block content %}
-{% for post in posts %}
-<article class="media content-section">
-    <div class="media-body">
-        <div class="article-metadata">
-            <a class="mr-2" href="{% url 'state-posts' post.state %}">{{ post.state }}</a>
-            <small class="text-muted">{{ post.date_posted|date:"F d, Y" }}</small>
-        </div>
-        <h2><a class="article-title" href="{% url 'post-detail' post.id %}">{{ post.dcn_number }}</a></h2>
-        <p class="article-content">{{ post.description_of_change }}</p>
-    </div>
-</article>
-{% endfor %}
+{% block content-main %}
+<table class="table table-striped">
+    <thead>
+        <th scope="col">State</th>
+        <th scope="col">date_posted</th>
+        <th scope="col">dcn_number</th>
+        <th scope="col">description_of_change</th>
+    </thead>
+    {% for post in posts %}
+    <tr>
+        <td>{{ post.state }}</td>
+        <td>{{ post.date_posted|date:"F d, Y" }}</td>
+        <td>{{ post.dcn_number }}</td>
+        <td>{{ post.description_of_change }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
 {% if is_paginated %}
 
 {% if page_obj.has_previous %}
@@ -33,4 +38,4 @@
 {% endif %}
 
 {% endif %}
-{% endblock content %}
+{% endblock content-main %}
